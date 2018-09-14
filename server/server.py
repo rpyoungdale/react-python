@@ -53,6 +53,7 @@ def get_hello():
 @app.route('/users')
 def get_users():
     users_list = User.query.all()
+    # from IPython import embed; embed()
     arr = []
     for user in users_list:
         arr.append("%s %s" % (user.first_name, user.last_name))
