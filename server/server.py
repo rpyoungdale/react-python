@@ -2,14 +2,14 @@ from flask import Flask, render_template, url_for, request, redirect
 from flask_cors import CORS
 from flask import jsonify
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
+# from flask_migrate import Migrate
 import json
 import random
 
 app = Flask(__name__, static_folder="../static/dist", template_folder="../static")
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/ryanyoungdale/python-projects/react-python/hello.db'
 db = SQLAlchemy(app)
-migrate = Migrate(app, db)
+# migrate = Migrate(app, db)
 CORS(app)
 
 user_hellos = db.Table('user_hellos',
@@ -49,6 +49,15 @@ def get_hello():
     # from IPython import embed; embed()
 
     return random.choice(greeting_list).word
+
+@app.route('/users')
+def get_users():
+    users_list = User.query.all()
+    arr = []
+    for user in users_list:
+        arr.append("%s %s" % (user.first_name, user.last_name))
+
+    return jsonify(arr)
 
 if __name__ == '__main__':
     app.run(debug=True)
