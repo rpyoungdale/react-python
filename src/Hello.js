@@ -1,11 +1,13 @@
 import React from "react";
-// var $ = require("jquery");
+import { Button } from "semantic-ui-react";
+
+const baseURL = "http://127.0.0.1:5000";
 
 class Hello extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      greeting: `Hello ${this.props.name}`,
+      greeting: `Hello ${this.props.name}!`,
       language: "",
       word: ""
     };
@@ -18,7 +20,7 @@ class Hello extends React.Component {
   };
 
   getPythonHello = () => {
-    fetch("http://127.0.0.1:5000/hello")
+    fetch(`${baseURL}/hello`)
       .then(res => res.json())
       .then(json => this.randomGreeting(json));
   };
@@ -49,8 +51,8 @@ class Hello extends React.Component {
     return (
       <div>
         <h1>{this.state.greeting}</h1>
-        <hr />
-        <button onClick={this.getPythonHello}>Say Hello!</button>
+
+        <Button onClick={this.getPythonHello}>Say Hello!</Button>
         <form onSubmit={this.handleSubmit}>
           <input
             type="text"
@@ -64,7 +66,7 @@ class Hello extends React.Component {
             placeholder="word"
             onChange={this.handleChange}
           />
-          <input type="submit" value="Submit" />
+          <Button primary>Add</Button>
         </form>
       </div>
     );

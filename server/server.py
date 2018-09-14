@@ -2,17 +2,25 @@ from flask import Flask, render_template, url_for, request, redirect
 from flask_cors import CORS
 from flask import jsonify
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+import json
 import random
 
 app = Flask(__name__, static_folder="../static/dist", template_folder="../static")
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/ryanyoungdale/python-projects/react-python/hello.db'
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 CORS(app)
 
 class Hello(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     language = db.Column(db.String(200), unique=True, nullable=False)
     word = db.Column(db.String(50))
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    first_name = db.Column(db.String(200), unique=True, nullable=False)
+    last_name = db.Column(db.String(50))
 
 @app.route('/')
 def index():
