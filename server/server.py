@@ -14,7 +14,7 @@ CORS(app)
 
 user_hellos = db.Table('user_hellos',
     db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
-    db.Column('hello_id', db.Integer, db.ForeignKey('user.id'))
+    db.Column('hello_id', db.Integer, db.ForeignKey('hello.id'))
 )
 
 class Hello(db.Model):
