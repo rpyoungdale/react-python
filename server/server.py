@@ -12,10 +12,16 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 CORS(app)
 
+user_hellos = db.Table('user_hellos',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+    db.Column('hello_id', db.Integer, db.ForeignKey('user.id'))
+)
+
 class Hello(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     language = db.Column(db.String(200), unique=True, nullable=False)
     word = db.Column(db.String(50))
+    languages = db.relationship('User', secondary=user_hellos, backref=db.backref('languages', lazy='dynamic'))
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
